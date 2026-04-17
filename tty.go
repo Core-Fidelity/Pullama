@@ -3,8 +3,8 @@ package main
 import (
 	"os"
 	"strings"
-	"syscall"
-	"unsafe"
+
+	"golang.org/x/term"
 )
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -66,24 +66,15 @@ func DetectTTY() TTYCaps {
 }
 
 func isTerminal(fd uintptr) bool {
-	var t syscall.Termios
-	_, _, err := syscall.Syscall(syscall.SYS_IOCTL, fd, syscall.TIOCGETA, uintptr(unsafe.Pointer(&t)))
-	return err == 0
+	return term.IsTerminal(int(fd))
 }
 
 func termSize() (int, int) {
-	type winsize struct {
-		Row    uint16
-		Col    uint16
-		Xpixel uint16
-		Ypixel uint16
-	}
-	var ws winsize
-	_, _, err := syscall.Syscall(syscall.SYS_IOCTL, os.Stdout.Fd(), syscall.TIOCGWINSZ, uintptr(unsafe.Pointer(&ws)))
-	if err != 0 {
+	w, h, err := term.GetSize(int(os.Stdout.Fd()))
+	if err != nil {
 		return 0, 0
 	}
-	return int(ws.Col), int(ws.Row)
+	return w, h
 }
 
 // ─────────────────────────────────────────────────────────────────────────────

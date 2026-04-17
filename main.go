@@ -100,10 +100,20 @@ func die(format string, args ...any) {
 }
 
 func printHelp(w *os.File) {
-	fmt.Fprintln(w, `Pullama — A resumable model puller for Ollama
-		By Core-Fidelity
+	// OSC 8 hyperlinks (works in iTerm2, Kitty, WezTerm, Alacritty, VS Code, Windows Terminal)
+	// Format: ESC ] 8 ; ; URL BEL TEXT ESC ] 8 ; ; BEL
+	hyperlink := func(url, text string) string {
+		return "\x1b]8;;" + url + "\x07" + text + "\x1b]8;;\x07"
+	}
+	coffee := hyperlink("https://buymeacoffee.com/corefidelity", "Buy Me A Coffee")
+	github := hyperlink("https://github.com/sponsors/Core-Fidelity", "GitHub Sponsors")
 
-Usage:
+	fmt.Fprintln(w, "Pulluma — A resumable model puller for Ollama")
+	fmt.Fprintln(w, "    By Core-Fidelity")
+	fmt.Fprintln(w, "")
+	fmt.Fprintln(w, "Support:", coffee+" · "+github)
+	fmt.Fprintln(w, "")
+	fmt.Fprintln(w, `Usage:
   pullama <model> [flags]         Pull a model
   pullama list                     List installed models
   pullama show <model>             Show model details
@@ -135,11 +145,7 @@ Exit codes:
   1  General error
   2  Disk full
   3  Authentication failed
-  4  Model not found
-
-Support:
-  https://buymeacoffee.com/corefidelity
-  https://github.com/sponsors/Core-Fidelity`)
+  4  Model not found`)
 }
 
 func runQueue(args []string, cfg *Config, ui *UI) {
