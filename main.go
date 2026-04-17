@@ -135,7 +135,11 @@ Exit codes:
   1  General error
   2  Disk full
   3  Authentication failed
-  4  Model not found`)
+  4  Model not found
+
+Support:
+  https://buymeacoffee.com/corefidelity
+  https://github.com/sponsors/Core-Fidelity`)
 }
 
 func runQueue(args []string, cfg *Config, ui *UI) {

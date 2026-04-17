@@ -263,6 +263,13 @@ pullama uses the same Ed25519 key as Ollama (`~/.ollama/id_ed25519`). If you've 
 - Coexists with a running Ollama server — blobs are content-addressed, so concurrent writes are safe
 - Works on macOS (arm64/amd64), Linux (amd64/arm64), and Windows (amd64)
 
+## Support
+
+If Pullama saved you time (or bandwidth), consider supporting development:
+
+- [Buy me a coffee](https://buymeacoffee.com/corefidelity)
+- [GitHub Sponsors](https://github.com/sponsors/Core-Fidelity)
+
 ## License
 
 MIT
